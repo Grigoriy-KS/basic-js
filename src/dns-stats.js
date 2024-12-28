@@ -22,9 +22,35 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function getDNSStats(domains) {
+  if (domains.length === 0) return {};
+  const reverseDomainsArray = domains.map(function(item) {
+    return item.split('.').reverse();
+  });
+  const reverseDomains = domains.map(function(item) {
+    return '.' + item.split('.').reverse().join('.');
+  });
+  const levelDomainNamesArray = [];
+  for (let i = 0; i < reverseDomainsArray.length; i++) {
+    if (!levelDomainNamesArray.includes(reverseDomainsArray[i][0])) levelDomainNamesArray.push('.' + reverseDomainsArray[i][0]);
+  }
+  for (let i = 0; i < reverseDomainsArray.length; i++) {
+    if (typeof(reverseDomainsArray[i][1]) === 'undefined' || reverseDomainsArray[i][1] === null) continue;
+    if (!levelDomainNamesArray.includes('.' + reverseDomainsArray[i][0] + '.' + reverseDomainsArray[i][1])) levelDomainNamesArray.push('.' + reverseDomainsArray[i][0] + '.' + reverseDomainsArray[i][1]);
+  }
+  for (let i = 0; i < reverseDomainsArray.length; i++) {
+    if (typeof(reverseDomainsArray[i][2]) === 'undefined' || reverseDomainsArray[i][2] === null) continue;
+    if (!levelDomainNamesArray.includes('.' + reverseDomainsArray[i][0] + '.' + reverseDomainsArray[i][1] + '.' + reverseDomainsArray[i][2])) levelDomainNamesArray.push('.' + reverseDomainsArray[i][0] + '.' + reverseDomainsArray[i][1] + '.' + reverseDomainsArray[i][2]);
+  }
+  const result = {};
+  for (let i = 0; i < levelDomainNamesArray.length; i++) {
+    let amount = 0;
+    for (let j = 0; j < reverseDomains.length; j++) {
+      if (reverseDomains[j].includes(levelDomainNamesArray[i])) amount++;
+    }
+    result[levelDomainNamesArray[i]] = amount;
+  }
+  return result;
 }
 
 module.exports = {
