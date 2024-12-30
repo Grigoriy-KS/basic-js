@@ -24,7 +24,15 @@ const { NotImplementedError } = require('../extensions/index.js');
  * ]
  */
 function minesweeper(matrix) {
-  const resultMatrix = structuredClone(matrix);
+  // const resultMatrix = structuredClone(matrix);
+  const resultMatrix = [];
+  for (let i = 0; i < matrix.length; i++) {
+    resultMatrix[i] = [];
+    for (let j = 0; j < matrix[i].length; j++) {
+      resultMatrix[i][j] = matrix[i][j];
+    }
+  }
+  
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       resultMatrix[i][j] = 0;
