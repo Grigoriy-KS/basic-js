@@ -38,7 +38,6 @@ function minesweeper(matrix) {
       matrix[i + 0] && (matrix[i + 0][j - 1]) && (resultMatrix[i][j] += 1);
     }
   }
-  console.log(matrix);
   return resultMatrix;
 }
 
