@@ -36,14 +36,6 @@ function minesweeper(matrix) {
       matrix[i + 1] && (matrix[i + 1][j + 0]) && (resultMatrix[i][j] += 1);
       matrix[i + 1] && (matrix[i + 1][j - 1]) && (resultMatrix[i][j] += 1);
       matrix[i + 0] && (matrix[i + 0][j - 1]) && (resultMatrix[i][j] += 1);
-      // if (matrix[i - 1][j - 1] === true) matrix[i][j] += 1;
-      // if (matrix[i - 1][j + 0] === true) matrix[i][j] += 1;
-      // if (matrix[i - 1][j + 1] === true) matrix[i][j] += 1;
-      // if (matrix[i + 0][j + 1] === true) matrix[i][j] += 1;
-      // if (matrix[i + 1][j + 1] === true) matrix[i][j] += 1;
-      // if (matrix[i + 1][j + 0] === true) matrix[i][j] += 1;
-      // if (matrix[i + 1][j - 1] === true) matrix[i][j] += 1;
-      // if (matrix[i + 0][j - 1] === true) matrix[i][j] += 1;
     }
   }
   console.log(matrix);
