@@ -20,13 +20,58 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(isDirect) {
+    if (typeof(isDirect) === 'undefined') {
+      this.isDirect = true;
+    } else {
+      this.isDirect = isDirect;
+    }
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(message, key) {
+    if (typeof(message) === 'undefined' || typeof(key) === 'undefined') {
+      throw new Error('Incorrect arguments!');
+    }
+    let i = 0;
+    const resultArray = message.toUpperCase().split('').map(function(item) {
+      let result = item;
+      if (item >= 'A' && item <= 'Z') {
+        if (i >= key.length) i = 0;
+        const alphabetLength = 'Z'.codePointAt() - 'A'.codePointAt() + 1;
+        const shift = key.toUpperCase().codePointAt(i) - 'A'.codePointAt();
+        const encryptedItemCode = (item.codePointAt() - 'A'.codePointAt() + shift) % alphabetLength + 'A'.codePointAt();
+        ++i;
+        result = String.fromCodePoint(encryptedItemCode);
+      }
+      return result;
+    });
+    if (this.isDirect) {
+      return resultArray.join('');
+    } else {
+      return resultArray.reverse().join('');
+    }
+  }
+  decrypt(encryptedMessage, key) {
+    if (typeof(encryptedMessage) === 'undefined' || typeof(key) === 'undefined') {
+      throw new Error('Incorrect arguments!');
+    }
+    let i = 0;
+    const resultArray = encryptedMessage.toUpperCase().split('').map(function(item) {
+      let result = item;
+      if (item >= 'A' && item <= 'Z') {
+        if (i >= key.length) i = 0;
+        const alphabetLength = 'Z'.codePointAt() - 'A'.codePointAt() + 1;
+        const shift = key.toUpperCase().codePointAt(i) - 'A'.codePointAt();
+        const decryptedItemCode = (item.codePointAt() - 'A'.codePointAt() - shift + alphabetLength) % alphabetLength + 'A'.codePointAt();
+        ++i;
+        result = String.fromCodePoint(decryptedItemCode);
+      }
+      return result;
+    });
+    if (this.isDirect) {
+      return resultArray.join('');
+    } else {
+      return resultArray.reverse().join('');
+    }
   }
 }
 
