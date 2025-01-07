@@ -13,8 +13,9 @@ const chainMaker = {
     return this;
   },
   removeLink(position) {
-    if (!Number.isInteger(position) || position - 1 >= this.getLength() || position - 1 <= 0) {
-      throw new Error("You can\'t remove incorrect link!");
+    if (!Number.isInteger(position) || ((position - 1) >= this.getLength()) || (position - 1 < 0)) {
+      this.array = [];
+      throw new Error('You can\'t remove incorrect link!');
     }
     let tempArray = [];
     for (let i = 0; i < this.getLength(); ++i) {
